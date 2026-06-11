@@ -35,7 +35,6 @@
     overflow-x: hidden;
   }
 
-  /* drifting ember particles */
   .ember {
     position: fixed;
     bottom: -10px;
@@ -53,7 +52,7 @@
     100% { transform: translate(var(--drift), -110vh) scale(0.3); opacity: 0; }
   }
 
-  header { text-align: center; margin-bottom: 40px; z-index: 1; }
+  header { text-align: center; margin-bottom: 32px; z-index: 1; }
 
   h1 {
     font-family: 'Cinzel', serif;
@@ -95,7 +94,7 @@
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--text-dim);
-    margin-bottom: 36px;
+    margin-bottom: 28px;
     z-index: 1;
   }
   .total-bar b {
@@ -104,6 +103,39 @@
     font-weight: 600;
     margin-left: 8px;
   }
+
+  .foe-bar {
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    width: 100%;
+    max-width: 720px;
+  }
+  .foe-label {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  select, .boss-input {
+    font-family: 'EB Garamond', serif;
+    font-size: 17px;
+    color: var(--gold-bright);
+    background: var(--panel);
+    border: 1px solid var(--gold-dim);
+    border-radius: 4px;
+    padding: 9px 14px;
+    outline: none;
+  }
+  select { cursor: pointer; min-width: 260px; }
+  select:hover, .boss-input:focus { border-color: var(--gold); }
+  .boss-input { color: var(--text); width: 200px; display: none; }
+  .boss-input::placeholder { color: var(--text-dim); font-style: italic; }
 
   .arena {
     display: grid;
@@ -176,18 +208,17 @@
     font-size: 15px;
     color: var(--blood-bright);
     letter-spacing: 0.04em;
-    transition: opacity 0.4s;
   }
 
   .count {
     font-family: 'Cinzel', serif;
-    font-size: 96px;
+    font-size: 88px;
     font-weight: 700;
     line-height: 1.1;
     color: var(--text);
     text-shadow: 0 4px 18px rgba(0,0,0,0.8);
     font-variant-numeric: tabular-nums;
-    margin: 6px 0 4px;
+    margin: 4px 0 0;
     transition: color 0.3s;
   }
   .count.bump { animation: bump 0.35s ease; color: var(--blood-bright); }
@@ -202,8 +233,17 @@
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--text-dim);
-    margin-bottom: 22px;
+    margin-bottom: 8px;
   }
+
+  .vs-boss {
+    font-size: 15px;
+    font-style: italic;
+    color: var(--text-dim);
+    margin-bottom: 18px;
+    min-height: 20px;
+  }
+  .vs-boss b { color: var(--gold-dim); font-weight: 500; font-style: normal; }
 
   .controls { display: flex; justify-content: center; gap: 12px; }
 
@@ -256,6 +296,68 @@
     font-size: 12px;
   }
 
+  .ledger {
+    z-index: 1;
+    width: 100%;
+    max-width: 720px;
+    margin-top: 44px;
+  }
+  .ledger h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .ledger table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--panel);
+    border: 1px solid var(--panel-edge);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .ledger th {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--panel-edge);
+    text-align: right;
+  }
+  .ledger th:first-child { text-align: left; }
+  .ledger td {
+    font-size: 17px;
+    padding: 11px 16px;
+    border-bottom: 1px solid rgba(46, 38, 24, 0.5);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+  }
+  .ledger td:first-child { text-align: left; color: var(--gold-bright); }
+  .ledger tr:last-child td { border-bottom: none; }
+  .ledger tbody tr { cursor: pointer; transition: background 0.15s; }
+  .ledger tbody tr:hover { background: rgba(200, 168, 101, 0.05); }
+  .ledger tbody tr.selected { background: rgba(200, 168, 101, 0.09); }
+  .ledger tbody tr.selected td:first-child::before {
+    content: "⚔ ";
+    color: var(--blood-bright);
+  }
+  .ledger .empty {
+    text-align: center;
+    font-style: italic;
+    color: var(--text-dim);
+    padding: 22px;
+    font-size: 16px;
+  }
+  .ledger .total-col { color: var(--gold); font-weight: 500; }
+
   .footer {
     margin-top: 40px;
     display: flex;
@@ -273,7 +375,6 @@
   }
   .btn-reset:hover { border-color: var(--blood); color: var(--blood-bright); }
 
-  /* YOU DIED overlay */
   #died-overlay {
     position: fixed;
     inset: 0;
@@ -305,6 +406,8 @@
     font-size: 19px;
     color: var(--text-dim);
     letter-spacing: 0.08em;
+    text-align: center;
+    padding: 0 20px;
   }
 </style>
 </head>
@@ -323,6 +426,13 @@
 
 <div class="total-bar">Souls lost to the Lands Between <b id="total">0</b></div>
 
+<div class="foe-bar">
+  <span class="foe-label">Current foe</span>
+  <select id="boss-select" aria-label="Select current boss"></select>
+  <input class="boss-input" id="boss-input" type="text" maxlength="60"
+         placeholder="Name thy tormentor…" aria-label="New boss name">
+</div>
+
 <main class="arena">
   <section class="card" id="card-elliot">
     <div class="crest">E</div>
@@ -330,6 +440,7 @@
     <div class="epithet" id="epithet-elliot"></div>
     <div class="count" id="count-elliot">0</div>
     <div class="count-label">Deaths</div>
+    <div class="vs-boss" id="vs-elliot"></div>
     <div class="controls">
       <button class="btn-add" onclick="addDeath('elliot', 1)" aria-label="Add death for Elliot">+</button>
       <button class="btn-sub" onclick="addDeath('elliot', -1)" aria-label="Remove death for Elliot">&minus;</button>
@@ -343,6 +454,7 @@
     <div class="epithet" id="epithet-jake"></div>
     <div class="count" id="count-jake">0</div>
     <div class="count-label">Deaths</div>
+    <div class="vs-boss" id="vs-jake"></div>
     <div class="controls">
       <button class="btn-add" onclick="addDeath('jake', 1)" aria-label="Add death for Jake">+</button>
       <button class="btn-sub" onclick="addDeath('jake', -1)" aria-label="Remove death for Jake">&minus;</button>
@@ -351,16 +463,47 @@
   </section>
 </main>
 
+<section class="ledger">
+  <h2>Tally of humiliations</h2>
+  <table>
+    <thead>
+      <tr><th>Boss</th><th>Elliot</th><th>Jake</th><th>Total</th></tr>
+    </thead>
+    <tbody id="ledger-body"></tbody>
+  </table>
+</section>
+
 <div class="footer">
   <button class="btn-reset" onclick="resetAll()">Begin new journey</button>
 </div>
 
 <script>
   const PLAYERS = ['elliot', 'jake'];
+  const MISC = 'Open world & misc';
+  const ADD_NEW = '__add_new__';
+  const DEFAULT_BOSSES = [
+    MISC,
+    'Margit, the Fell Omen',
+    'Godrick the Grafted',
+    'Red Wolf of Radagon',
+    'Rennala, Queen of the Full Moon',
+    'Starscourge Radahn',
+    'Rykard, Lord of Blasphemy',
+    'Morgott, the Omen King',
+    'Astel, Naturalborn of the Void',
+    'Fire Giant',
+    'Godskin Duo',
+    'Maliketh, the Black Blade',
+    'Godfrey / Hoarah Loux',
+    'Radagon & Elden Beast',
+    'Mohg, Lord of Blood',
+    'Malenia, Blade of Miquella',
+    'Dragonlord Placidusax',
+    'Lichdragon Fortissax'
+  ];
   const QUIPS = [
     'Skill issue, perhaps.',
     'The flask was right there.',
-    'Margit sends his regards.',
     'Have you tried dodging?',
     'A dog did this, didn’t it.',
     'Rise, Tarnished. Again.',
@@ -369,39 +512,119 @@
     'Maybe try fashion souls instead.',
     'The runes are gone. All of them.',
     'You were greedy with that last hit.',
-    'Stand in the poison again, see what happens.'
+    'Stand in the poison again, see what happens.',
+    'Try finger, but hole.'
   ];
 
-  let counts = { elliot: 0, jake: 0 };
+  let state = { selected: MISC, order: [...DEFAULT_BOSSES], bosses: {} };
+  for (const b of DEFAULT_BOSSES) state.bosses[b] = { elliot: 0, jake: 0 };
+
   try {
-    const saved = localStorage.getItem('er-death-counter');
-    if (saved) counts = { ...counts, ...JSON.parse(saved) };
+    const v2 = localStorage.getItem('er-death-counter-v2');
+    if (v2) {
+      const parsed = JSON.parse(v2);
+      if (parsed && parsed.bosses && parsed.order) state = parsed;
+    } else {
+      const v1 = localStorage.getItem('er-death-counter');
+      if (v1) {
+        const old = JSON.parse(v1);
+        state.bosses[MISC].elliot = old.elliot || 0;
+        state.bosses[MISC].jake = old.jake || 0;
+      }
+    }
   } catch (e) {}
 
   let overlayTimer = null;
 
   function save() {
-    try { localStorage.setItem('er-death-counter', JSON.stringify(counts)); } catch (e) {}
+    try { localStorage.setItem('er-death-counter-v2', JSON.stringify(state)); } catch (e) {}
+  }
+
+  function totals() {
+    const t = { elliot: 0, jake: 0 };
+    for (const b of state.order) {
+      t.elliot += state.bosses[b].elliot;
+      t.jake += state.bosses[b].jake;
+    }
+    return t;
+  }
+
+  function renderSelect() {
+    const sel = document.getElementById('boss-select');
+    sel.innerHTML = '';
+    for (const b of state.order) {
+      const opt = document.createElement('option');
+      opt.value = b;
+      opt.textContent = b;
+      sel.appendChild(opt);
+    }
+    const addOpt = document.createElement('option');
+    addOpt.value = ADD_NEW;
+    addOpt.textContent = '+ Add a boss…';
+    sel.appendChild(addOpt);
+    sel.value = state.selected;
   }
 
   function render() {
-    let total = 0;
-    for (const p of PLAYERS) {
-      document.getElementById('count-' + p).textContent = counts[p];
-      total += counts[p];
-    }
-    document.getElementById('total').textContent = total;
+    const t = totals();
+    document.getElementById('count-elliot').textContent = t.elliot;
+    document.getElementById('count-jake').textContent = t.jake;
+    document.getElementById('total').textContent = t.elliot + t.jake;
 
-    for (const p of PLAYERS) document.getElementById('epithet-' + p).textContent = '';
-    if (counts.elliot !== counts.jake) {
-      const leader = counts.elliot > counts.jake ? 'elliot' : 'jake';
+    for (const p of PLAYERS) {
+      document.getElementById('epithet-' + p).textContent = '';
+      const vs = state.bosses[state.selected][p];
+      document.getElementById('vs-' + p).innerHTML =
+        '<b>' + vs + '</b> vs ' + escapeHtml(shortName(state.selected));
+    }
+    if (t.elliot !== t.jake) {
+      const leader = t.elliot > t.jake ? 'elliot' : 'jake';
       document.getElementById('epithet-' + leader).textContent = 'The Ever-Dying';
     }
+
+    renderLedger();
     save();
   }
 
+  function shortName(boss) {
+    return boss.split(',')[0];
+  }
+
+  function escapeHtml(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function renderLedger() {
+    const body = document.getElementById('ledger-body');
+    body.innerHTML = '';
+    const rows = state.order
+      .map(b => ({ name: b, e: state.bosses[b].elliot, j: state.bosses[b].jake }))
+      .filter(r => r.e + r.j > 0 || r.name === state.selected)
+      .sort((a, b) => (b.e + b.j) - (a.e + a.j));
+
+    if (rows.length === 0) {
+      body.innerHTML = '<tr><td colspan="4" class="empty">No deaths yet. Suspicious.</td></tr>';
+      return;
+    }
+    for (const r of rows) {
+      const tr = document.createElement('tr');
+      if (r.name === state.selected) tr.className = 'selected';
+      tr.innerHTML = '<td>' + escapeHtml(r.name) + '</td><td>' + r.e + '</td><td>' + r.j +
+        '</td><td class="total-col">' + (r.e + r.j) + '</td>';
+      tr.onclick = () => {
+        state.selected = r.name;
+        document.getElementById('boss-select').value = r.name;
+        render();
+      };
+      body.appendChild(tr);
+    }
+  }
+
   function addDeath(who, delta) {
-    counts[who] = Math.max(0, counts[who] + delta);
+    const b = state.bosses[state.selected];
+    b[who] = Math.max(0, b[who] + delta);
 
     if (delta > 0) {
       const card = document.getElementById('card-' + who);
@@ -419,7 +642,9 @@
     const overlay = document.getElementById('died-overlay');
     const sub = document.getElementById('died-sub');
     const name = who.charAt(0).toUpperCase() + who.slice(1);
-    sub.textContent = name + ' — ' + QUIPS[Math.floor(Math.random() * QUIPS.length)];
+    const foe = state.selected === MISC ? 'the Lands Between' : shortName(state.selected);
+    sub.textContent = name + ', felled by ' + foe + ' — ' +
+      QUIPS[Math.floor(Math.random() * QUIPS.length)];
     overlay.classList.add('show');
     clearTimeout(overlayTimer);
     overlayTimer = setTimeout(() => overlay.classList.remove('show'), 1800);
@@ -427,18 +652,47 @@
 
   function resetAll() {
     if (!confirm('Begin a new journey? All deaths will be forgotten.')) return;
-    counts = { elliot: 0, jake: 0 };
+    state = { selected: MISC, order: [...DEFAULT_BOSSES], bosses: {} };
+    for (const b of DEFAULT_BOSSES) state.bosses[b] = { elliot: 0, jake: 0 };
+    renderSelect();
     render();
   }
 
+  document.getElementById('boss-select').addEventListener('change', (e) => {
+    const input = document.getElementById('boss-input');
+    if (e.target.value === ADD_NEW) {
+      input.style.display = 'inline-block';
+      input.focus();
+    } else {
+      input.style.display = 'none';
+      state.selected = e.target.value;
+      render();
+    }
+  });
+
+  document.getElementById('boss-input').addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    const name = e.target.value.trim();
+    if (name) {
+      if (!state.bosses[name]) {
+        state.bosses[name] = { elliot: 0, jake: 0 };
+        state.order.push(name);
+      }
+      state.selected = name;
+    }
+    e.target.value = '';
+    e.target.style.display = 'none';
+    renderSelect();
+    render();
+  });
+
   document.addEventListener('keydown', (e) => {
-    if (e.repeat) return;
+    if (e.repeat || e.target.tagName === 'INPUT') return;
     const k = e.key.toLowerCase();
     if (k === 'e') addDeath('elliot', 1);
     if (k === 'j') addDeath('jake', 1);
   });
 
-  // ember particles
   for (let i = 0; i < 18; i++) {
     const ember = document.createElement('div');
     ember.className = 'ember';
@@ -449,6 +703,7 @@
     document.body.appendChild(ember);
   }
 
+  renderSelect();
   render();
 </script>
 </body>
